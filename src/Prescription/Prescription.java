@@ -28,9 +28,9 @@ public class Prescription implements Comparable<Prescription> {
         this.amount = amount;
     }
 
-    public Prescription (String CSVInput) {
+    public Prescription (String DataInput) {
         // Sample 0-MedicineName-10
-        String[] inputs = CSVInput.split("[-/,]"); // Converting data into array
+        String[] inputs = DataInput.split("[-/,]"); // Converting data into array
         try {
             int index = 0;
             this.status = MED_STATUS.values()[Integer.parseInt(inputs[index++])];
@@ -69,6 +69,10 @@ public class Prescription implements Comparable<Prescription> {
         // More code can be added if necessary
     }
 
+    public String getDataSave() {
+        return DataSave();
+    }
+
     @Override
     public int compareTo(Prescription o) {
         if (this.medicineName.compareTo(o.getMedicineName()) == 0) {
@@ -78,8 +82,8 @@ public class Prescription implements Comparable<Prescription> {
     }
 
     // Private method
-
-    private String CSVSave () {
+    private String DataSave () {
+        // Sample 0-MedicineName1-10
         return this.status.ordinal() + "-" + this.medicineName + "-" + this.amount; // Separated by '-' so that each prescription is stored in a cell
     }
 }

@@ -2,6 +2,8 @@ package Appointment;
 
 import Prescription.Prescription;
 
+import java.util.Date;
+
 class AppointmentNode {
     Appointment appointment;
     AppointmentNode nextNode;
@@ -74,5 +76,13 @@ public class AppointmentList {
             index--;
         }
         return curRef.appointment; // Return null if target medicine not prescribed
+    }
+
+    public void DataSave() {
+        AppointmentNode curRef = headRef;
+        while (curRef != null) {
+            System.out.println(curRef.appointment.getDataSave());
+            curRef = curRef.nextNode;
+        }
     }
 }

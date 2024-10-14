@@ -25,6 +25,7 @@ public class AppointmentTesting {
         System.out.println("Printing prescription of appointment 0");
         list1.findAppointment(0).printPrescription();
 
+        list1.DataSave();
 
     }
 }

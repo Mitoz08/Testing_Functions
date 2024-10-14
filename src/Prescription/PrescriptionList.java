@@ -84,4 +84,16 @@ public class PrescriptionList {
         return curRef.prescription; // Return null if target medicine not prescribed
     }
 
+    public String DataSave(String delimiter){
+        String output = "";
+        PrescriptionNode curRef = headRef;
+        while (curRef != null) {
+            output += curRef.prescription.getDataSave();
+            curRef = curRef.nextNode;
+            if (curRef == null) break;
+            output += delimiter;
+        }
+        return output;
+    }
+
 }

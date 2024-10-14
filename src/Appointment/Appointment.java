@@ -3,7 +3,6 @@ package Appointment;
 import Prescription.Prescription;
 import Prescription.PrescriptionList;
 
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -47,9 +46,9 @@ public class Appointment implements Comparable<Appointment> {
         this.prescriptionList = prescriptionList;
     }
 
-    public Appointment(String CSVInput){
+    public Appointment(String DataInput){
         // Sample 0/Chemo/1001/001/2024-08-21-16-00/Empty/0-MedicineName1-10/0-MedicineName2-10
-        String[] Inputs = CSVInput.split("[/,]"); // Removed "-" to keep Date and Prescription data intact
+        String[] Inputs = DataInput.split("[/,]"); // Removed "-" to keep Date and Prescription data intact
         this.prescriptionList = new PrescriptionList();
         try {
             int index = 0;
@@ -88,12 +87,25 @@ public class Appointment implements Comparable<Appointment> {
 
     public void printPrescription() { this.prescriptionList.print();}
 
+    public String getDataSave() {return DataSave();}
+
     @Override
     public int compareTo(Appointment o) {
         return this.appointmentTime.compareTo(o.appointmentTime);
     }
 
     // Private methods
+    private String DataSave(){
+        // Sample 0/Chemo/1001/001/2024-08-21-16-00/Empty/0-MedicineName1-10/0-MedicineName2-10
+        String[] outputList = new String[] {
+                String.valueOf(this.status.ordinal()), this.nameOfApt, String.valueOf(this.patientID),
+                String.valueOf(this.doctorID), DateToStr(this.appointmentTime), this.notes
+        };
+        String output = convertStrArrayToStr(outputList, "/");
+        output += prescriptionList.DataSave("/");
+        return output;
+    }
+
     private Date StrToDate (String string) {
         String[] Inputs = string.split("[-/,]");
         try {
@@ -119,5 +131,19 @@ public class Appointment implements Comparable<Appointment> {
             int minutes = sc.nextInt();
             return new Date(year-1900,month,day,hours,minutes);
         }
+    }
+    private String DateToStr (Date date) {
+        // Sample 2024-08-21-16-00
+        String[] output = new String[]
+                {String.valueOf(date.getYear()), String.valueOf(date.getMonth()), String.valueOf(date.getDate()),
+                String.valueOf(date.getHours()), String.valueOf(date.getMinutes())};
+        return convertStrArrayToStr(output, "-");
+    }
+
+    private String convertStrArrayToStr(String[] strArr, String delimiter) {
+        StringBuilder sb = new StringBuilder();
+        for (String str : strArr)
+            sb.append(str).append(delimiter);
+        return sb.substring(0, sb.length() - 1);
     }
 }
