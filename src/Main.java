@@ -12,5 +12,6 @@ public class Main {
 
         PrescriptionTesting.run();
         AppointmentTesting.run();
+
     }
 }
